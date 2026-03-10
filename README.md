@@ -1,6 +1,6 @@
 # A2A Agent Template
 
-An AI-powered [Agent-to-Agent (A2A) protocol](https://github.com/google/A2A) agent template built with TypeScript, Express, and the Vercel AI SDK.
+An [Agent-to-Agent (A2A) protocol](https://github.com/google/A2A) agent template built with TypeScript, Express, and the Vercel AI SDK.
 
 Supports local tools, [MCP](https://modelcontextprotocol.io/) servers (stdio and Streamable HTTP), and exposes a configurable agent card.
 
@@ -35,7 +35,7 @@ All configuration lives in **`src/agent/config.ts`**:
 | --- | --- |
 | `agentConfig` | Provider name, URLs shown in the agent card |
 | `createModel` | LLM provider and model (swap Anthropic/Bedrock/OpenAI/etc.) |
-| `instructions` | System prompt — the agent's personality and behavior |
+| `agentInstructions` | Persona, constraints, and few-shot examples (responsibilities derived from skills) |
 | `agentBehavior` | Max tool-loop steps, temperature |
 | `skills` | Skills advertised in the agent card |
 | `localTools` | In-process tools (defined with AI SDK `tool()`) |

@@ -15,7 +15,7 @@ Automatically creates and populates a new Agent-to-Agent (A2A) protocol agent re
 ### Step 1: Extract Information from Request
 
 **Extracted from user request:**
-- Repository name (must end with `-agent`, e.g., "a2a-travel-agent", "code-reviewer-agent")
+- Repository name (must end with `-agent`, e.g., "travel-agent", "code-reviewer-agent")
 
 **Derived by skill:**
 - `organization`: Inferred from current GitHub organization context
@@ -33,8 +33,8 @@ Before taking any action, present the derived values and ask the user to confirm
 I'm about to create the following A2A agent repository:
 
 - **Repository:** {organization}/{repository_name}
-- **Template:** {organization}/a2a-agent
-- **Agent skill:** Derived from repository name (e.g., "a2a-travel-agent" → skill "travel-agent")
+- **Template:** {organization}/acme-agent
+- **Agent skill:** Derived from repository name (e.g., "travel-agent" → skill "travel")
 
 Shall I proceed?
 ```
@@ -55,7 +55,7 @@ mcp_github_create_repository(
     organization="{organization}",
     description="A2A agent: {description}",
     template_owner="{organization}",
-    template_repo="a2a-agent"
+    template_repo="acme-agent"
 )
 ```
 

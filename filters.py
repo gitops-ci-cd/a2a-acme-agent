@@ -13,10 +13,10 @@ def dash_to_underscore(value):
     return str(value).replace('-', '_')
 
 def skill_id_from_name(value):
-    """Derive a kebab-case skill ID from the project name by stripping the 'a2a-' prefix."""
+    """Derive a kebab-case skill ID from the project name by stripping the '-agent' suffix."""
     name = str(value)
-    if name.startswith('a2a-'):
-        name = name[4:]
+    if name.endswith('-agent'):
+        name = name[:-6]
     return name
 
 def skill_name_from_id(value):

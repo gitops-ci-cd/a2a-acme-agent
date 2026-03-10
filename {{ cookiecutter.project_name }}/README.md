@@ -37,7 +37,7 @@ Edit the `a2a` key to define who your agent is and what it can do:
 
 ```jsonc
 {
-  "name": "a2a-travel-agent",
+  "name": "travel-agent",
   "description": "AI travel planning agent with weather and flight tools",
   "a2a": {
     // Optional — omit if not needed

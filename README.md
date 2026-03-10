@@ -8,4 +8,4 @@ Ask your AI assistant in natural language to create a new A2A agent. See [.skill
 
 Template configuration can be found in [cookiecutter.json](cookiecutter.json).
 
-For manual usage, choose "Use this template" on GitHub, name the repository `a2a-[your-agent-name]`, then once cloned, run the "Cookiecutter" Action to get started.
+For manual usage, choose "Use this template" on GitHub, name the repository `[your-agent-name]-agent`, then once cloned, run the "Cookiecutter" Action to get started.

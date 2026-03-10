@@ -1,7 +1,7 @@
 {
-  "name": "a2a-agent",
+  "name": "{{ cookiecutter.project_name }}",
   "version": "0.1.0",
-  "description": "A2A agent template with MCP server support",
+  "description": "{{ cookiecutter.description }}",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -22,7 +22,7 @@
     "typescript"
   ],
   "a2a": {
-    "role": "a helpful AI assistant",
+    "role": "{{ cookiecutter.agent_role }}",
     "constraints": [],
     "examples": [
       {
@@ -36,10 +36,10 @@
     },
     "skills": [
       {
-        "id": "general-assistant",
-        "name": "General Assistant",
-        "description": "General-purpose AI assistant that can answer questions and help with tasks",
-        "tags": ["general", "assistant", "help"],
+        "id": "{{ cookiecutter.project_name | skill_id_from_name }}",
+        "name": "{{ cookiecutter.project_name | skill_id_from_name | skill_name_from_id }}",
+        "description": "{{ cookiecutter.description }}",
+        "tags": ["{{ cookiecutter.project_name | skill_id_from_name }}"],
         "examples": ["Hello, how can you help me?", "What can you do?"]
       }
     ]

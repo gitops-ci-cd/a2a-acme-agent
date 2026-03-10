@@ -1,5 +1,31 @@
-node_modules/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
 dist/
-.env
-*.log
+build/
+
+# Cookiecutter
+output/
+*.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Generated projects (when testing template locally)
+/a2a-*/
+!{{ cookiecutter.project_name }}/

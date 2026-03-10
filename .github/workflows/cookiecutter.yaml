@@ -1,0 +1,53 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+name: Cookiecutter
+
+jobs:
+  make:
+    name: Make a cookie
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -r requirements.txt
+      - run: |
+          set -e
+          PROJECT_NAME="${{ github.event.repository.name }}"
+          cookiecutter . \
+          --no-input \
+          --output-dir ./cookie \
+          $(printf '%s ' \
+            "project_name=$PROJECT_NAME"
+          )
+      - run: |
+          echo "PROJECT_FOLDER=$(ls -d ./cookie/* | head -n 1)" >> $GITHUB_ENV
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cookie
+          include-hidden-files: true
+          path: ${{ env.PROJECT_FOLDER }}/**
+  bake:
+    needs: make
+    name: Bake the cookie
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: cookie
+      - name: Reinitialize git repository
+        shell: bash
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
+          git init
+          git add .
+          git commit -m "Initialized from cookiecutter"
+          git branch -M main
+          git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+          git push -u -f origin main

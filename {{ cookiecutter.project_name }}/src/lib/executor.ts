@@ -1,6 +1,5 @@
 import type { Message, TaskStatusUpdateEvent, TextPart } from '@a2a-js/sdk';
 import type { AgentExecutor, ExecutionEventBus, RequestContext } from '@a2a-js/sdk/server';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface ExecutorContext {
   taskId: string;
@@ -70,7 +69,7 @@ export function createExecutor(
 
         const responseMessage: Message = {
           kind: 'message',
-          messageId: uuidv4(),
+          messageId: crypto.randomUUID(),
           role: 'agent',
           parts: [{ kind: 'text', text: responseText }],
           contextId,
@@ -89,7 +88,7 @@ export function createExecutor(
             state: 'failed',
             message: {
               kind: 'message',
-              messageId: uuidv4(),
+              messageId: crypto.randomUUID(),
               role: 'agent',
               parts: [
                 {

@@ -1,6 +1,6 @@
 import type { LanguageModel } from 'ai';
 import { generateText, stepCountIs, ToolLoopAgent } from 'ai';
-import { mcpRegistry } from '../mcp/index.js';
+import { initMCPRegistry, mcpRegistry } from '../mcp/index.js';
 import { createModel, localTools } from './config.js';
 import { agentBehavior, buildInstructions } from './util.js';
 
@@ -21,6 +21,9 @@ export class Agent {
 
   static async create(): Promise<Agent> {
     const model = createModel();
+
+    // Initialize MCP registry (ANS discovery + static config)
+    await initMCPRegistry();
 
     // Load tools from all registered MCP clients
     const mcpEntries = Object.values(mcpRegistry);

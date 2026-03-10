@@ -2,6 +2,7 @@ import { createMCPClient, type MCPClient } from '@ai-sdk/mcp';
 import { Experimental_StdioMCPTransport as StdioMCPTransport } from '@ai-sdk/mcp/mcp-stdio';
 import { mcpServers } from '../agent/config.js';
 import type { MCPServerConfig } from '../agent/types.js';
+import { discoverMCPServers } from './discovery.js';
 import { getRegistry, register } from './registry.js';
 
 /**
@@ -57,15 +58,33 @@ function createClientWrapper(config: MCPServerConfig) {
 }
 
 /**
- * Auto-register all MCP servers declared in config.ts
+ * Register an MCP server config into the registry.
  */
-for (const config of mcpServers) {
+function registerServer(config: MCPServerConfig) {
   const id = config.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  if (getRegistry()[id]) return; // skip duplicates
   register(id, {
     name: config.name,
     description: config.description,
     client: createClientWrapper(config),
   });
+}
+
+/**
+ * Initialize MCP registry: discover from ANS, then layer static configs.
+ * Must be called (and awaited) before using mcpRegistry.
+ */
+export async function initMCPRegistry(): Promise<void> {
+  // Discover MCP servers from ANS registry
+  const ansServers = await discoverMCPServers();
+  for (const config of ansServers) {
+    registerServer(config);
+  }
+
+  // Register statically configured MCP servers (from config.ts)
+  for (const config of mcpServers) {
+    registerServer(config);
+  }
 }
 
 /**

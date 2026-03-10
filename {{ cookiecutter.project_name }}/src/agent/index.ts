@@ -22,8 +22,8 @@ export class Agent {
   static async create(): Promise<Agent> {
     const model = createModel();
 
-    // Initialize MCP registry (ANS discovery + static config)
-    await initMCPRegistry();
+    // Initialize MCP registry with static config
+    initMCPRegistry();
 
     // Load tools from all registered MCP clients
     const mcpEntries = Object.values(mcpRegistry);

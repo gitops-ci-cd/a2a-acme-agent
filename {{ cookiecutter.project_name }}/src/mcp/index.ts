@@ -1,5 +1,6 @@
-import { createMCPClient, type MCPClient } from '@ai-sdk/mcp';
+import { createMCPClient, type MCPClient, type OAuthClientProvider } from '@ai-sdk/mcp';
 import { Experimental_StdioMCPTransport as StdioMCPTransport } from '@ai-sdk/mcp/mcp-stdio';
+import { ClientCredentialsProvider } from '@modelcontextprotocol/sdk/client/auth-extensions.js';
 import { mcpServers } from '../agent/config.js';
 import type { MCPServerConfig } from '../agent/types.js';
 import { getRegistry, register } from './registry.js';
@@ -33,6 +34,11 @@ function createClientWrapper(config: MCPServerConfig) {
             type: 'http' as const,
             url: config.url,
             headers: config.headers,
+            // ClientCredentialsProvider.redirectUrl is undefined (no user redirect needed),
+            // but @ai-sdk/mcp hasn't updated its OAuthClientProvider interface to allow that yet.
+            authProvider: config.oauth
+              ? (new ClientCredentialsProvider(config.oauth) as unknown as OAuthClientProvider)
+              : undefined,
           },
           name: config.name,
         });

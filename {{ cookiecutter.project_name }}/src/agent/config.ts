@@ -65,5 +65,9 @@ export const mcpServers: MCPServerConfig[] = [
   //   name: 'My Remote Service',
   //   description: 'Tools provided by a remote MCP server',
   //   url: 'https://mcp.example.com/mcp',
+  //   oauth: {
+  //     clientId: process.env.MY_SERVICE_CLIENT_ID!,
+  //     clientSecret: process.env.MY_SERVICE_CLIENT_SECRET!,
+  //   },
   // },
 ];

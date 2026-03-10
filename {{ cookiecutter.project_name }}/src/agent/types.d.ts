@@ -20,8 +20,13 @@ export interface MCPServerHTTP {
   description: string;
   /** URL of the Streamable HTTP endpoint */
   url: string;
-  /** Optional headers (e.g. for auth) */
+  /** Optional headers (e.g. for static auth tokens) */
   headers?: Record<string, string>;
+  /** Optional OAuth client credentials config for automatic token management */
+  oauth?: {
+    clientId: string;
+    clientSecret: string;
+  };
 }
 
 export type MCPServerConfig = MCPServerStdio | MCPServerHTTP;

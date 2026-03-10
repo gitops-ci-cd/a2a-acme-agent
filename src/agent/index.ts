@@ -1,7 +1,8 @@
 import type { LanguageModel } from 'ai';
 import { generateText, stepCountIs, ToolLoopAgent } from 'ai';
 import { mcpRegistry } from '../mcp/index.js';
-import { agentBehavior, buildInstructions, createModel, localTools } from './config.js';
+import { createModel, localTools } from './config.js';
+import { agentBehavior, buildInstructions } from './util.js';
 
 /**
  * A2A Agent

@@ -21,6 +21,29 @@
     "mcp",
     "typescript"
   ],
+  "a2a": {
+    "role": "a helpful AI assistant",
+    "constraints": [],
+    "examples": [
+      {
+        "user": "Hello, how can you help me?",
+        "agent": "I'm a general-purpose AI assistant. I can answer questions, help with tasks, and use available tools to find information for you. What would you like help with?"
+      }
+    ],
+    "behavior": {
+      "maxSteps": 5,
+      "temperature": 0.5
+    },
+    "skills": [
+      {
+        "id": "general-assistant",
+        "name": "General Assistant",
+        "description": "General-purpose AI assistant that can answer questions and help with tasks",
+        "tags": ["general", "assistant", "help"],
+        "examples": ["Hello, how can you help me?", "What can you do?"]
+      }
+    ]
+  },
   "dependencies": {
     "@a2a-js/sdk": "^0.3.10",
     "@ai-sdk/anthropic": "^3.0.47",

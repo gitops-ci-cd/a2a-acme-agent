@@ -1,9 +1,8 @@
 import { readFileSync } from 'node:fs';
 import type { AgentCard } from '@a2a-js/sdk';
 import type { Request } from 'express';
-import { agentConfig, skills } from './config.js';
+import { agentConfig, skills } from './util.js';
 
-/** Read package.json for agent metadata */
 const pkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf-8'));
 
 /**
@@ -20,8 +19,8 @@ export function generateAgentCard(req?: Request): AgentCard {
     url: `${baseUrl}/a2a/jsonrpc`,
     protocolVersion: '0.3.0',
     version: pkg.version,
-    provider: agentConfig.provider,
-    documentationUrl: agentConfig.documentationUrl,
+    ...(agentConfig.provider && { provider: agentConfig.provider }),
+    ...(agentConfig.documentationUrl && { documentationUrl: agentConfig.documentationUrl }),
     skills,
     capabilities: {
       streaming: false,

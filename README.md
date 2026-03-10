@@ -29,17 +29,72 @@ The agent starts on port `4000` by default.
 
 ## Customize Your Agent
 
-All configuration lives in **`src/agent/config.ts`**:
+Configuration is split into two files: **`package.json`** for declarative values and **`src/agent/config.ts`** for anything that requires code.
 
-| Section | What it controls |
+### `package.json` — identity, role, skills, behavior
+
+Edit the `a2a` key to define who your agent is and what it can do:
+
+```jsonc
+{
+  "name": "a2a-travel-agent",
+  "description": "AI travel planning agent with weather and flight tools",
+  "a2a": {
+    // Optional — omit if not needed
+    "provider": { "organization": "Wanderlust Travel Co.", "url": "https://wanderlust.travel" },
+    "documentationUrl": "https://wanderlust.travel/docs/agent",
+
+    // Agent persona (used in the system prompt)
+    "role": "a travel planning assistant that helps users research destinations, check weather forecasts, and find flights",
+    "constraints": [
+      "Never book or purchase anything on behalf of the user — only provide recommendations",
+      "Always include weather context when suggesting travel dates",
+      "Prices are estimates and may change — remind the user to verify before booking"
+    ],
+    "examples": [
+      {
+        "user": "I want to go somewhere warm in February.",
+        "agent": "Let me check weather forecasts for a few popular warm destinations in February. I'll look at Cancún, Bali, and Cape Town to compare."
+      },
+      {
+        "user": "What's the weather like in Tokyo next week?",
+        "agent": "I'll pull up the forecast for Tokyo for the next 7 days."
+      }
+    ],
+
+    // Agent behavior
+    "behavior": { "maxSteps": 10, "temperature": 0.7 },
+
+    // Skills — advertised in the agent card AND used as responsibilities in the system prompt
+    "skills": [
+      {
+        "id": "weather-lookup",
+        "name": "Weather Forecasts",
+        "description": "Look up current conditions and multi-day weather forecasts for any city worldwide",
+        "tags": ["weather", "forecast", "travel"],
+        "examples": ["What's the weather in Paris this weekend?", "Will it rain in Bali next week?"]
+      },
+      {
+        "id": "trip-planner",
+        "name": "Trip Planning",
+        "description": "Suggest destinations, build itineraries, and recommend travel dates based on weather and preferences",
+        "tags": ["travel", "itinerary", "planning"],
+        "examples": ["Plan a 5-day trip to Portugal", "Where should I go for a beach vacation in March?"]
+      }
+    ]
+  }
+}
+```
+
+### `src/agent/config.ts` — code configuration
+
+| Export | What it controls |
 | --- | --- |
-| `agentConfig` | Provider name, URLs shown in the agent card |
-| `createModel` | LLM provider and model (swap Anthropic/Bedrock/OpenAI/etc.) |
-| `agentInstructions` | Persona, constraints, and few-shot examples (responsibilities derived from skills) |
-| `agentBehavior` | Max tool-loop steps, temperature |
-| `skills` | Skills advertised in the agent card |
-| `localTools` | In-process tools (defined with AI SDK `tool()`) |
+| `createModel()` | LLM provider and model (swap Anthropic/Bedrock/OpenAI/etc.) |
+| `localTools` | In-process tools (defined with AI SDK `tool()` + Zod) |
 | `mcpServers` | MCP servers to connect to (stdio or Streamable HTTP) |
+
+Everything else lives in `src/agent/util.ts` — framework plumbing you shouldn't need to touch.
 
 ### Adding an MCP Server
 
@@ -87,7 +142,7 @@ export const localTools: ToolSet = {
 };
 ```
 
-## Configuration
+## Environment Variables
 
 | Variable | Required | Default | Description |
 | --- | --- | --- | --- |

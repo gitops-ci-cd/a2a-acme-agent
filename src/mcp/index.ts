@@ -1,6 +1,7 @@
 import { createMCPClient, type MCPClient } from '@ai-sdk/mcp';
 import { Experimental_StdioMCPTransport as StdioMCPTransport } from '@ai-sdk/mcp/mcp-stdio';
-import { type MCPServerConfig, mcpServers } from '../agent/config.js';
+import { mcpServers } from '../agent/config.js';
+import type { MCPServerConfig } from '../agent/types.js';
 import { getRegistry, register } from './registry.js';
 
 /**

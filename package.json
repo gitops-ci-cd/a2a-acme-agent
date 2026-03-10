@@ -50,7 +50,7 @@
     "@ai-sdk/mcp": "^1.0.21",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "ai": "^6.0.103",
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "uuid": "^11.0.5",
     "zod": "^4.3.6"
   },

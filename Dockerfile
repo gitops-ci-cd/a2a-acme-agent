@@ -1,5 +1,5 @@
 # Start from the official LTS Node image.
-FROM node:24-slim AS base
+FROM node:25-slim AS base
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,7 @@ RUN npm ci --silent
 RUN npm run build
 
 # Continue with the official LTS slim Node image to create a production image.
-FROM node:24-slim
+FROM node:25-slim
 
 WORKDIR /usr/src/app
 
